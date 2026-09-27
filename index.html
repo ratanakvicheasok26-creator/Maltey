@@ -893,6 +893,110 @@
     background: #f0fdf4;
   }
 
+  /* ==========================================================================
+     FLYING PHOTOS ACROSS SCREEN (CONTINUOUS FLOATING POLAROIDS)
+     ========================================================================== */
+  .flying-photo-item {
+    position: fixed;
+    bottom: -190px;
+    z-index: 5;
+    background: #ffffff;
+    padding: 7px 7px 11px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(22, 60, 36, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    width: clamp(120px, 16vw, 150px);
+    text-align: center;
+    user-select: none;
+    pointer-events: auto;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    animation: floatPhotoUpDrift linear forwards;
+  }
+
+  .flying-photo-item:hover {
+    animation-play-state: paused !important;
+    transform: scale(1.22) rotate(0deg) !important;
+    box-shadow: 0 24px 50px rgba(22, 60, 36, 0.38), 0 0 0 2px #86efac;
+    z-index: 99999;
+  }
+
+  .flying-photo-item .f-tape {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 44px;
+    height: 13px;
+    background: rgba(254, 240, 138, 0.85);
+    border-left: 1px dashed rgba(202, 138, 4, 0.5);
+    border-right: 1px dashed rgba(202, 138, 4, 0.5);
+    pointer-events: none;
+  }
+
+  .flying-photo-item .f-img-wrap {
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 6px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fef08a, #fed7aa, #fbcfe8);
+  }
+
+  .flying-photo-item .f-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .flying-photo-item .f-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 2px;
+  }
+
+  @keyframes floatPhotoUpDrift {
+    0% {
+      transform: translateY(0) translateX(0) rotate(var(--rot-start, -6deg)) scale(0.85);
+      opacity: 0;
+    }
+    8% {
+      opacity: 0.96;
+    }
+    50% {
+      transform: translateY(-65vh) translateX(var(--drift-x, 40px)) rotate(var(--rot-mid, 5deg)) scale(1);
+      opacity: 0.96;
+    }
+    90% {
+      opacity: 0.96;
+    }
+    100% {
+      transform: translateY(-145vh) translateX(calc(var(--drift-x, 40px) * 1.6)) rotate(var(--rot-end, -7deg)) scale(0.9);
+      opacity: 0;
+    }
+  }
+
+  /* Photo Upload & Drop Banner */
+  .photo-upload-banner {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1.5px dashed #4ade80;
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    text-align: left;
+    transition: all 0.25s ease;
+  }
+  .photo-upload-banner.dragover {
+    background: #bbf7d0;
+    border-color: #16a34a;
+    transform: scale(1.02);
+  }
+
   /* Polaroid Gallery Grid */
   .gallery-filter-bar {
     display: flex;
@@ -1388,15 +1492,30 @@
             <button class="btn-secondary" id="againBtn">✨ Show me another sweet reason</button>
             <button class="btn-yes" id="viewMemoriesFromYes" style="padding: 10px 20px; font-size: 0.88rem;">📸 See Our Photos</button>
           </div>
-        </div>
-      </div>
-    </div>
-
     <!-- ==================== TAB 2: SWEET MEMORIES PHOTO GALLERY ==================== -->
     <div class="tab-pane" id="tab-memories">
       <div class="card-top-decor">📸 Forever Moments With Maltey</div>
       <h1>Our Sweet Memories</h1>
       <p class="subtitle">Every glance, every cute selfie, every laugh, and every adventure we share together.</p>
+
+      <!-- Instant Photo Upload & Flying Photo Trigger Banner -->
+      <div class="photo-upload-banner" id="uploadBanner">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div style="font-weight: 700; color: #166534; font-size: 0.95rem; display: flex; align-items: center; gap: 6px;">
+              <span>📁</span> Choose or Drop Your Photos Here
+            </div>
+            <div style="font-size: 0.8rem; color: #4b7258; margin-top: 2px;">
+              Select all 13 photos from your device to see them fly live across the meadow & appear in your gallery!
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="btn-yes" id="selectPhotosBtn" style="padding: 8px 16px; font-size: 0.82rem;">📁 Pick Photos</button>
+            <button class="btn-secondary" id="burstFlyingBtn" style="padding: 8px 14px; font-size: 0.82rem;">🎈 Launch Flying Shower</button>
+          </div>
+        </div>
+        <input type="file" id="bulkPhotoInput" multiple accept="image/*" style="display: none;">
+      </div>
 
       <!-- Category Filter Pills -->
       <div class="gallery-filter-bar">
@@ -1484,6 +1603,9 @@
       <button class="sound-btn" id="ambientSoundBtn">
         <span id="soundIcon">🎵</span> <span id="soundText">Play Nature Melody</span>
       </button>
+      <button class="sound-btn" id="flyingToggleBtn">
+        <span id="flyingIcon">🎈</span> <span id="flyingText">Flying Photos: ON</span>
+      </button>
       <button class="sound-btn" id="burstBtn">
         <span>✨</span> <span>Shower Hearts</span>
       </button>
@@ -1529,6 +1651,13 @@
   const soundText = document.getElementById('soundText');
   const burstBtn = document.getElementById('burstBtn');
   const viewMemoriesFromYes = document.getElementById('viewMemoriesFromYes');
+  const flyingToggleBtn = document.getElementById('flyingToggleBtn');
+  const flyingIcon = document.getElementById('flyingIcon');
+  const flyingText = document.getElementById('flyingText');
+  const burstFlyingBtn = document.getElementById('burstFlyingBtn');
+  const selectPhotosBtn = document.getElementById('selectPhotosBtn');
+  const bulkPhotoInput = document.getElementById('bulkPhotoInput');
+  const uploadBanner = document.getElementById('uploadBanner');
 
   // Garden Elements
   const gardenField = document.getElementById('gardenField');
@@ -1571,9 +1700,9 @@
   }
 
   // ==========================================================================
-  // MEMORIES DATA & LIVE POPUPS
+  // MEMORIES DATA & PERSISTENCE
   // ==========================================================================
-  const photoMemories = [
+  let photoMemories = [
     {
       id: 1,
       src: 'images/photo1.jpg',
@@ -1693,6 +1822,83 @@
     }
   ];
 
+  // Load custom saved photos from localStorage if available
+  try {
+    const savedCustom = localStorage.getItem('maltey_saved_photos');
+    if (savedCustom) {
+      const parsed = JSON.parse(savedCustom);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        parsed.forEach((imgData, i) => {
+          if (photoMemories[i]) photoMemories[i].src = imgData;
+        });
+      }
+    }
+  } catch(e) {}
+
+  // Instant Bulk Photo Importer / File Picker
+  if (selectPhotosBtn && bulkPhotoInput) {
+    selectPhotosBtn.addEventListener('click', () => bulkPhotoInput.click());
+
+    bulkPhotoInput.addEventListener('change', (e) => {
+      handleFiles(e.target.files);
+    });
+  }
+
+  function handleFiles(files) {
+    if (!files || files.length === 0) return;
+
+    const fileArray = Array.from(files).slice(0, 13);
+    const customPhotosToSave = [];
+
+    fileArray.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        if (photoMemories[index]) {
+          photoMemories[index].src = dataUrl;
+          customPhotosToSave[index] = dataUrl;
+        }
+
+        // When last file is read, save and refresh view
+        if (index === fileArray.length - 1 || customPhotosToSave.filter(Boolean).length === fileArray.length) {
+          try {
+            localStorage.setItem('maltey_saved_photos', JSON.stringify(customPhotosToSave));
+          } catch(err) {
+            console.warn('Storage quota full, images active in session memory');
+          }
+          renderPolaroids('all');
+          spawnFlyingPhotoShower(5);
+          spawnHeartBurst(['📸', '💖', '✨', '🌸']);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Drag & drop support
+  if (uploadBanner) {
+    ['dragenter', 'dragover'].forEach(eventName => {
+      uploadBanner.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadBanner.classList.add('dragover');
+      }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      uploadBanner.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        uploadBanner.classList.remove('dragover');
+      }, false);
+    });
+
+    uploadBanner.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      if (dt && dt.files) {
+        handleFiles(dt.files);
+      }
+    });
+  }
+
   // Helper for image fallback
   function handleLiveImgError(imgEl) {
     imgEl.style.display = 'none';
@@ -1709,7 +1915,7 @@
 
     const filtered = photoMemories.filter(m => filter === 'all' || m.category === filter);
 
-    filtered.forEach((m, idx) => {
+    filtered.forEach((m) => {
       const card = document.createElement('div');
       card.className = 'polaroid-card';
       card.setAttribute('data-id', m.id);
@@ -1813,7 +2019,113 @@
   });
 
   // ==========================================================================
-  // LIVE POPUPS ENGINE (POPS UP EVERY 7 SECONDS LIVE ON SITE)
+  // CONTINUOUS FLYING PHOTOS ENGINE (FLYING POLAROIDS ACROSS SCREEN)
+  // ==========================================================================
+  let isFlyingActive = true;
+  let flyingTimer = null;
+  let flyingIndex = 0;
+
+  function spawnSingleFlyingPhoto(forcedMem) {
+    if (!isFlyingActive && !forcedMem) return;
+
+    const mem = forcedMem || photoMemories[flyingIndex % photoMemories.length];
+    flyingIndex++;
+
+    const flyEl = document.createElement('div');
+    flyEl.className = 'flying-photo-item';
+
+    // Random X position across screen
+    const minLeft = 4;
+    const maxLeft = 82;
+    const randomLeft = minLeft + Math.random() * (maxLeft - minLeft);
+    flyEl.style.left = randomLeft + 'vw';
+
+    // Random tilt and drift physics
+    const rotStart = (Math.random() * 16 - 8).toFixed(1) + 'deg';
+    const rotMid = (Math.random() * 16 - 8).toFixed(1) + 'deg';
+    const rotEnd = (Math.random() * 20 - 10).toFixed(1) + 'deg';
+    const driftX = (Math.random() * 120 - 60).toFixed(0) + 'px';
+    const duration = (13 + Math.random() * 8).toFixed(1) + 's';
+
+    flyEl.style.setProperty('--rot-start', rotStart);
+    flyEl.style.setProperty('--rot-mid', rotMid);
+    flyEl.style.setProperty('--rot-end', rotEnd);
+    flyEl.style.setProperty('--drift-x', driftX);
+    flyEl.style.animationDuration = duration;
+
+    flyEl.innerHTML = `
+      <div class="f-tape"></div>
+      <div class="f-img-wrap">
+        <img class="f-img" src="${mem.src}" alt="${mem.title}" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&auto=format&fit=crop&q=80';">
+      </div>
+      <div class="f-caption">🌸 ${mem.title}</div>
+    `;
+
+    // Click flying photo to open full lightbox
+    flyEl.addEventListener('click', () => {
+      openLightbox(mem.id);
+    });
+
+    document.body.appendChild(flyEl);
+
+    // Auto cleanup after flight finishes
+    setTimeout(() => {
+      if (flyEl && flyEl.parentNode) flyEl.remove();
+    }, parseFloat(duration) * 1000 + 1000);
+  }
+
+  function startFlyingPhotoLoop() {
+    if (flyingTimer) clearInterval(flyingTimer);
+    // Release a flying photo every 3.2 seconds
+    flyingTimer = setInterval(() => {
+      if (isFlyingActive) spawnSingleFlyingPhoto();
+    }, 3200);
+  }
+
+  function spawnFlyingPhotoShower(count = 6) {
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const randomMem = photoMemories[Math.floor(Math.random() * photoMemories.length)];
+        spawnSingleFlyingPhoto(randomMem);
+      }, i * 350);
+    }
+  }
+
+  if (burstFlyingBtn) {
+    burstFlyingBtn.addEventListener('click', () => {
+      spawnFlyingPhotoShower(6);
+      spawnHeartBurst(['🎈', '💖', '✨', '🌸']);
+    });
+  }
+
+  if (flyingToggleBtn) {
+    flyingToggleBtn.addEventListener('click', () => {
+      isFlyingActive = !isFlyingActive;
+      if (isFlyingActive) {
+        flyingText.textContent = 'Flying Photos: ON';
+        flyingIcon.textContent = '🎈';
+        flyingToggleBtn.style.color = '#15803d';
+        startFlyingPhotoLoop();
+        spawnFlyingPhotoShower(3);
+      } else {
+        flyingText.textContent = 'Flying Photos: OFF';
+        flyingIcon.textContent = '⏸️';
+        flyingToggleBtn.style.color = '#64748b';
+        if (flyingTimer) clearInterval(flyingTimer);
+        // Remove currently floating elements
+        document.querySelectorAll('.flying-photo-item').forEach(el => el.remove());
+      }
+    });
+  }
+
+  // Start flying photos shortly after page load
+  setTimeout(() => {
+    spawnSingleFlyingPhoto();
+    startFlyingPhotoLoop();
+  }, 1200);
+
+  // ==========================================================================
+  // LIVE POPUPS ENGINE (BOTTOM TOAST EVERY 7 SECONDS)
   // ==========================================================================
   const liveMemoryToast = document.getElementById('liveMemoryToast');
   const livePopupClose = document.getElementById('livePopupClose');
@@ -1837,8 +2149,8 @@
   function showNextLivePopup() {
     if (!isLiveActive) return;
 
-    const currentMem = photoMemories[liveIndex];
-    liveIndex = (liveIndex + 1) % photoMemories.length;
+    const currentMem = photoMemories[liveIndex % photoMemories.length];
+    liveIndex++;
 
     // Set content
     livePopupImg.style.display = 'block';
@@ -1868,14 +2180,12 @@
     if (liveTimer) clearTimeout(liveTimer);
     liveTimer = setTimeout(() => {
       liveMemoryToast.classList.remove('active');
-      // Wait 2.5 seconds before popping next
       setTimeout(() => {
         if (isLiveActive) showNextLivePopup();
       }, 2500);
     }, POPUP_DURATION);
   }
 
-  // Click popup to open in full lightbox
   function openCurrentLiveInLightbox() {
     const curId = photoMemories[(liveIndex - 1 + photoMemories.length) % photoMemories.length].id;
     openLightbox(curId);
@@ -1905,10 +2215,9 @@
     }
   });
 
-  // Start live popping after 1.8 seconds on page load
   setTimeout(() => {
     showNextLivePopup();
-  }, 1800);
+  }, 2200);
 
   // Playful dodging button captions
   const captions = [
@@ -2001,8 +2310,8 @@
     questionView.style.display = 'none';
     revealView.style.display = 'block';
     spawnHeartBurst(['💛', '🌸', '💐', '✨', '💖', '🌿']);
-    // Trigger celebratory live memory popup
     showNextLivePopup();
+    spawnFlyingPhotoShower(4);
   }
 
   yesBtn.addEventListener('click', showReveal);
@@ -2017,6 +2326,7 @@
   // Click on cartoon couple
   cartoonCouple.addEventListener('click', () => {
     spawnHeartBurst(['💛', '🌸', '💕', '✨', '💐', '👩‍❤️‍👨']);
+    spawnFlyingPhotoShower(3);
   });
 
   // ==========================================================================
