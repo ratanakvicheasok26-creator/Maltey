@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>For Maltey MabMab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --wine: #3a0d1c;
+    --wine-deep: #2a0714;
+    --blush: #f6c9cf;
+    --blush-soft: #fbe3e6;
+    --gold: #d9a55b;
+    --cream: #fff6ef;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  html {
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  body {
+    background: radial-gradient(ellipse at 50% 0%, #55162c 0%, var(--wine) 45%, var(--wine-deep) 100%);
+    color: var(--cream);
+    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(24px, env(safe-area-inset-top, 0px)) 20px max(24px, env(safe-area-inset-bottom, 0px));
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* drifting soft petals in the background */
+  .petal {
+    position: fixed;
+    top: -40px;
+    font-size: 22px;
+    opacity: 0.55;
+    pointer-events: none;
+    animation: drift linear infinite;
+    z-index: 0;
+    user-select: none;
+  }
+
+  @keyframes drift {
+    0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+    100% { transform: translateY(110vh) translateX(var(--drift-x, 30px)) rotate(360deg); }
+  }
+
+  .stage {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 560px;
+    text-align: center;
+  }
+
+  .eyebrow-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    color: var(--blush);
+    letter-spacing: 0.02em;
+    margin: 0 0 6px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: clamp(2.4rem, 8vw, 3.6rem);
+    line-height: 1.08;
+    margin: 0 0 18px;
+    color: var(--cream);
+  }
+
+  .sub {
+    font-size: clamp(0.95rem, 2.6vw, 1.05rem);
+    color: var(--blush-soft);
+    opacity: 0.85;
+    max-width: 34ch;
+    margin: 0 auto 44px;
+    line-height: 1.55;
+  }
+
+  .question-view {
+    transition: opacity 0.35s ease;
+  }
+
+  .button-field {
+    position: relative;
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 140px;
+  }
+
+  button {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn-yes {
+    background: var(--gold);
+    color: var(--wine-deep);
+    padding: 18px 38px;
+    font-size: 1.05rem;
+    box-shadow: 0 8px 24px rgba(217, 165, 91, 0.35);
+  }
+
+  .btn-yes:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(217, 165, 91, 0.45);
+  }
+
+  .btn-yes:active { transform: scale(0.97); }
+
+  .btn-no {
+    background: transparent;
+    color: var(--blush-soft);
+    border: 1.5px solid rgba(246, 201, 207, 0.4);
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    position: relative;
+  }
+
+  .btn-no.fixed-flee {
+    position: fixed;
+    z-index: 5;
+  }
+
+  .no-caption {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--blush-soft);
+    opacity: 0.6;
+    min-height: 1.2em;
+  }
+
+  /* ---- reveal view ---- */
+  .reveal-view {
+    display: none;
+  }
+
+  .reveal-view.show {
+    display: block;
+    animation: riseIn 0.6s cubic-bezier(.2,.9,.3,1);
+  }
+
+  @keyframes riseIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal-card {
+    border: 1px solid rgba(217, 165, 91, 0.4);
+    background: rgba(255, 246, 239, 0.04);
+    border-radius: 20px;
+    padding: 38px 30px;
+  }
+
+  .reveal-heart {
+    font-size: 2rem;
+    margin-bottom: 14px;
+  }
+
+  .line-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
+    line-height: 1.4;
+    color: var(--cream);
+    margin: 0 0 26px;
+  }
+
+  .name-highlight {
+    color: var(--gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .btn-again {
+    background: transparent;
+    border: 1px solid rgba(217, 165, 91, 0.5);
+    color: var(--gold);
+    padding: 11px 26px;
+    font-size: 0.9rem;
+  }
+
+  .btn-again:hover {
+    background: rgba(217, 165, 91, 0.12);
+  }
+
+  /* floating hearts burst */
+  .burst-heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 1.4rem;
+    pointer-events: none;
+    z-index: 4;
+    animation: floatUp 2.6s ease-in forwards;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-90vh) translateX(var(--fx, 0px)) rotate(20deg); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .petal, .burst-heart { animation: none; display: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="question-view" id="questionView">
+    <p class="eyebrow-name">a small question for Maltey MabMab</p>
+    <h1>Do you love me?</h1>
+    <p class="sub">Just one honest tap. I already know what I hope you'll pick.</p>
+
+    <div class="button-field" id="buttonField">
+      <button class="btn-yes" id="yesBtn">Yes, I love you 💛</button>
+      <button class="btn-no" id="noBtn">No</button>
+    </div>
+    <span class="no-caption" id="noCaption"></span>
+  </div>
+
+  <div class="reveal-view" id="revealView">
+    <div class="reveal-card">
+      <div class="reveal-heart">💛</div>
+      <p class="line-text" id="lineText"></p>
+      <button class="btn-again" id="againBtn">Show me another</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const buttonField = document.getElementById('buttonField');
+  const questionView = document.getElementById('questionView');
+  const revealView = document.getElementById('revealView');
+  const lineText = document.getElementById('lineText');
+  const againBtn = document.getElementById('againBtn');
+  const noCaption = document.getElementById('noCaption');
+
+  const NAME = "Maltey MabMab";
+
+  const captions = [
+    "wait, really?",
+    "come on, try the other one",
+    "it's just right there... almost",
+    "okay this button is shy",
+    "give up yet? 😌",
+    "the gold one is much friendlier"
+  ];
+
+  const lines = [
+    `${NAME}, if you were a star, I'd stop naming constellations and just call the whole sky after you.`,
+    `They say home is a place — but for me, ${NAME}, it's just wherever you're smiling.`,
+    `${NAME}, I must be a snowflake, because I fell for you the moment I saw you.`,
+    `If loving ${NAME} were a subject at KiTH, I'd be studying it every single day, no breaks.`,
+    `${NAME}, my code has bugs, my day has plans, but my feelings for you always compile perfectly.`,
+    `Some people search their whole life for someone like you, ${NAME} — I just got lucky early.`
+  ];
+
+  let usedLines = [];
+  let dodgeCount = 0;
+  let captionIndex = 0;
+
+  function randomLine() {
+    if (usedLines.length === lines.length) usedLines = [];
+    let choice;
+    do {
+      choice = lines[Math.floor(Math.random() * lines.length)];
+    } while (usedLines.includes(choice) && usedLines.length < lines.length);
+    usedLines.push(choice);
+    return choice;
+  }
+
+  function fleeNoButton() {
+    const fieldRect = buttonField.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
+
+    if (!noBtn.classList.contains('fixed-flee')) {
+      noBtn.classList.add('fixed-flee');
+      noBtn.style.width = btnRect.width + 'px';
+    }
+
+    const margin = 16;
+    const maxX = window.innerWidth - btnRect.width - margin;
+    const maxY = window.innerHeight - btnRect.height - margin;
+    const newX = Math.max(margin, Math.random() * maxX);
+    const newY = Math.max(margin, Math.random() * maxY);
+
+    noBtn.style.left = newX + 'px';
+    noBtn.style.top = newY + 'px';
+
+    dodgeCount++;
+    const scale = Math.max(0.55, 1 - dodgeCount * 0.06);
+    noBtn.style.transform = `scale(${scale})`;
+
+    noCaption.textContent = captions[Math.min(captionIndex, captions.length - 1)];
+    captionIndex++;
+  }
+
+  noBtn.addEventListener('mouseenter', fleeNoButton);
+  noBtn.addEventListener('touchstart', function (e) {
+    e.preventDefault();
+    fleeNoButton();
+  }, { passive: false });
+  noBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    fleeNoButton();
+  });
+
+  function spawnHeartBurst() {
+    const emojis = ['💛', '💕', '✨', '💗'];
+    for (let i = 0; i < 18; i++) {
+      const h = document.createElement('span');
+      h.className = 'burst-heart';
+      h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.setProperty('--fx', (Math.random() * 160 - 80) + 'px');
+      h.style.animationDelay = (Math.random() * 0.8) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 3600);
+    }
+  }
+
+  function showReveal() {
+    lineText.innerHTML = randomLine().replace(NAME, `<span class="name-highlight">${NAME}</span>`);
+    questionView.style.display = 'none';
+    revealView.classList.add('show');
+    spawnHeartBurst();
+  }
+
+  yesBtn.addEventListener('click', showReveal);
+
+  againBtn.addEventListener('click', function () {
+    lineText.innerHTML = randomLine().replace(NAME, `<span class="name-highlight">${NAME}</span>`);
+    spawnHeartBurst();
+  });
+
+  // gentle background petals
+  const petalEmojis = ['🌸', '💮', '🌷'];
+  for (let i = 0; i < 10; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.setProperty('--drift-x', (Math.random() * 60 - 30) + 'px');
+    p.style.animationDuration = (10 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    p.style.fontSize = (14 + Math.random() * 14) + 'px';
+    document.body.appendChild(p);
+  }
+</script>
+</body>
+</html>
