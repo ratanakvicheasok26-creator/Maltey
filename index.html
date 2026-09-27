@@ -3,287 +3,1082 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>For Maltey MabMab</title>
+<title>For Maltey MabMab 🌸 Our Love Meadow</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --wine: #3a0d1c;
-    --wine-deep: #2a0714;
-    --blush: #f6c9cf;
-    --blush-soft: #fbe3e6;
-    --gold: #d9a55b;
-    --cream: #fff6ef;
-    color-scheme: dark;
+    --sky-top: #b9e3f7;
+    --sky-mid: #d7effb;
+    --sky-warm: #fef0db;
+    --mountain-1: #8ba9c7;
+    --mountain-2: #65927c;
+    --hill-back: #4f965d;
+    --hill-mid: #3f8a4f;
+    --hill-front: #2e7a3f;
+    --card-bg: rgba(255, 255, 255, 0.78);
+    --card-border: rgba(255, 255, 255, 0.9);
+    --card-shadow: 0 20px 45px rgba(22, 60, 36, 0.16);
+    --text-main: #1d3324;
+    --text-muted: #4e6b56;
+    --accent-gold: #e59819;
+    --accent-rose: #f06292;
+    --accent-red: #e74c3c;
+    --accent-green: #2d8a4e;
   }
 
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
     height: 100%;
-    margin: 0;
-  }
-
-  html {
-    scroll-padding-top: env(safe-area-inset-top, 0px);
+    width: 100%;
+    overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-main);
   }
 
   body {
-    background: radial-gradient(ellipse at 50% 0%, #55162c 0%, var(--wine) 45%, var(--wine-deep) 100%);
-    color: var(--cream);
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    min-height: 100%;
+    background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 40%, var(--sky-warm) 75%, #d1f2cf 100%);
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  /* ==========================================================================
+     NATURAL SCENERY & MOUNTAINS (VECTOR ART LAYERS)
+     ========================================================================== */
+  .scenery-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Glowing Sun */
+  .sun {
+    position: absolute;
+    top: 6%;
+    right: 12%;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, #fff7d6 0%, #ffdf79 60%, rgba(255, 200, 60, 0) 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 55px #ffd966, 0 0 100px rgba(255, 225, 120, 0.5);
+    animation: sunPulse 6s ease-in-out infinite alternate;
+  }
+
+  .sun-flare {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 160px;
+    height: 160px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(255, 236, 179, 0.45) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    animation: rotateSlow 24s linear infinite;
+  }
+
+  @keyframes sunPulse {
+    0% { transform: scale(0.96); opacity: 0.9; }
+    100% { transform: scale(1.06); opacity: 1; }
+  }
+
+  @keyframes rotateSlow {
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  /* Clouds */
+  .cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 100px;
+    filter: drop-shadow(0 4px 10px rgba(100, 160, 200, 0.15));
+    animation: floatCloud linear infinite;
+  }
+  .cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  .cloud-1 {
+    width: 150px; height: 48px; top: 10%; left: -160px;
+    animation-duration: 46s;
+  }
+  .cloud-1::before { width: 62px; height: 62px; top: -30px; left: 24px; }
+  .cloud-1::after  { width: 44px; height: 44px; top: -18px; left: 74px; }
+
+  .cloud-2 {
+    width: 210px; height: 60px; top: 19%; left: -240px;
+    animation-duration: 62s;
+    animation-delay: -18s;
+    opacity: 0.75;
+  }
+  .cloud-2::before { width: 85px; height: 85px; top: -42px; left: 35px; }
+  .cloud-2::after  { width: 65px; height: 65px; top: -25px; left: 105px; }
+
+  .cloud-3 {
+    width: 120px; height: 38px; top: 6%; left: -130px;
+    animation-duration: 38s;
+    animation-delay: -9s;
+    opacity: 0.6;
+  }
+  .cloud-3::before { width: 46px; height: 46px; top: -22px; left: 20px; }
+  .cloud-3::after  { width: 36px; height: 36px; top: -14px; left: 58px; }
+
+  @keyframes floatCloud {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(calc(100vw + 350px)); }
+  }
+
+  /* Distant Mountain SVG */
+  .scenery-mountains {
+    position: absolute;
+    bottom: 15%;
+    left: 0;
+    width: 100%;
+    height: 52%;
+    min-height: 320px;
+  }
+
+  /* Rolling Green Hills in Foreground */
+  .scenery-hills {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 36%;
+    min-height: 230px;
+  }
+
+  /* ==========================================================================
+     CARTOON OF LOVE (ANIME / CHIBI COUPLE SITTING IN NATURE)
+     ========================================================================== */
+  .cartoon-love-scene {
+    position: absolute;
+    bottom: 16px;
+    right: 4%;
+    z-index: 2;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .cartoon-love-scene:hover {
+    transform: scale(1.05) translateY(-4px);
+  }
+
+  .cartoon-love-scene:hover .love-burst-trigger {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.1);
+  }
+
+  .love-badge-dialog {
+    position: absolute;
+    bottom: 105%;
+    right: 10px;
+    background: #ffffff;
+    color: #d81b60;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 8px 24px rgba(216, 27, 96, 0.22);
+    border: 1.5px solid #f8bbd0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: max(24px, env(safe-area-inset-top, 0px)) 20px max(24px, env(safe-area-inset-bottom, 0px));
-    overflow-x: hidden;
-    position: relative;
+    gap: 6px;
+    animation: gentleBob 3s ease-in-out infinite;
+  }
+  .love-badge-dialog::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    right: 40px;
+    width: 10px;
+    height: 10px;
+    background: #ffffff;
+    border-right: 1.5px solid #f8bbd0;
+    border-bottom: 1.5px solid #f8bbd0;
+    transform: rotate(45deg);
   }
 
-  /* drifting soft petals in the background */
-  .petal {
+  @keyframes gentleBob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .couple-svg {
+    width: 180px;
+    height: 155px;
+    filter: drop-shadow(0 10px 20px rgba(28, 68, 38, 0.25));
+  }
+
+  /* Animated heart hovering above couple */
+  .hover-heart {
+    animation: pulseHeart 1.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes pulseHeart {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.22); }
+  }
+
+  /* Tree & Wildflowers on the side */
+  .nature-side-decor {
+    position: absolute;
+    bottom: 0;
+    left: 2%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.92;
+  }
+  .tree-svg {
+    width: 160px;
+    height: 220px;
+    transform-origin: bottom center;
+    animation: treeSway 7s ease-in-out infinite alternate;
+  }
+  @keyframes treeSway {
+    0% { transform: rotate(-1deg); }
+    100% { transform: rotate(1.5deg); }
+  }
+
+  /* Floating Petals, Dandelions & Butterflies */
+  .floating-petal {
     position: fixed;
     top: -40px;
-    font-size: 22px;
-    opacity: 0.55;
+    font-size: 20px;
     pointer-events: none;
-    animation: drift linear infinite;
-    z-index: 0;
+    z-index: 3;
     user-select: none;
+    animation: driftPetal linear infinite;
   }
 
-  @keyframes drift {
-    0%   { transform: translateY(-10vh) translateX(0) rotate(0deg); }
-    100% { transform: translateY(110vh) translateX(var(--drift-x, 30px)) rotate(360deg); }
+  @keyframes driftPetal {
+    0% {
+      transform: translateY(-5vh) translateX(0) rotate(0deg);
+      opacity: 0;
+    }
+    10% { opacity: 0.85; }
+    90% { opacity: 0.85; }
+    100% {
+      transform: translateY(105vh) translateX(var(--drift-x, 80px)) rotate(420deg);
+      opacity: 0;
+    }
   }
 
-  .stage {
+  .butterfly {
+    position: fixed;
+    font-size: 22px;
+    pointer-events: none;
+    z-index: 3;
+    animation: flyButterfly 22s ease-in-out infinite;
+  }
+  @keyframes flyButterfly {
+    0%   { transform: translate(-10vw, 70vh) scale(0.9) rotate(5deg); }
+    25%  { transform: translate(30vw, 40vh) scale(1.05) rotate(-10deg); }
+    50%  { transform: translate(65vw, 55vh) scale(0.95) rotate(12deg); }
+    75%  { transform: translate(90vw, 30vh) scale(1) rotate(-8deg); }
+    100% { transform: translate(115vw, 60vh) scale(0.9) rotate(5deg); }
+  }
+
+  /* ==========================================================================
+     MAIN APP CONTAINER & HEADER
+     ========================================================================== */
+  .main-stage {
     position: relative;
-    z-index: 1;
+    z-index: 4;
     width: 100%;
-    max-width: 560px;
-    text-align: center;
+    max-width: 680px;
+    padding: 24px 20px 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
   }
 
-  .eyebrow-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
-    color: var(--blush);
+  /* Top Navigation / Mood Pills */
+  .nav-pills {
+    display: flex;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 6px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 6px 20px rgba(35, 78, 48, 0.08);
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-pill-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .nav-pill-btn:hover {
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .nav-pill-btn.active {
+    background: #ffffff;
+    color: #2e7a3f;
+    box-shadow: 0 4px 12px rgba(46, 122, 63, 0.18);
+  }
+
+  /* App Glass Card */
+  .glass-card {
+    width: 100%;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1.5px solid var(--card-border);
+    border-radius: 28px;
+    padding: 38px 30px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-top-decor {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(240, 98, 146, 0.12);
+    color: #d81b60;
+    padding: 6px 16px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 14px;
     letter-spacing: 0.02em;
-    margin: 0 0 6px;
   }
 
   h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-weight: 600;
-    font-size: clamp(2.4rem, 8vw, 3.6rem);
-    line-height: 1.08;
-    margin: 0 0 18px;
-    color: var(--cream);
+    font-size: clamp(2.2rem, 6.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #173822;
+    margin-bottom: 12px;
   }
 
-  .sub {
-    font-size: clamp(0.95rem, 2.6vw, 1.05rem);
-    color: var(--blush-soft);
-    opacity: 0.85;
-    max-width: 34ch;
-    margin: 0 auto 44px;
+  .subtitle {
+    font-size: clamp(0.95rem, 2.8vw, 1.08rem);
+    color: var(--text-muted);
     line-height: 1.55;
+    max-width: 42ch;
+    margin: 0 auto 30px;
   }
 
-  .question-view {
-    transition: opacity 0.35s ease;
+  /* Tab Sections */
+  .tab-pane {
+    display: none;
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  .tab-pane.active {
+    display: block;
   }
 
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ==========================================================================
+     TAB 1: LOVE QUESTION (DO YOU LOVE ME)
+     ========================================================================== */
   .button-field {
     position: relative;
     display: flex;
-    gap: 18px;
+    gap: 16px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    min-height: 140px;
-  }
-
-  button {
-    font-family: 'Work Sans', sans-serif;
-    font-weight: 600;
-    border: none;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    min-height: 120px;
+    margin-top: 10px;
   }
 
   .btn-yes {
-    background: var(--gold);
-    color: var(--wine-deep);
-    padding: 18px 38px;
+    background: linear-gradient(135deg, #2e7a3f 0%, #1e592c 100%);
+    color: #ffffff;
+    border: none;
+    padding: 16px 36px;
     font-size: 1.05rem;
-    box-shadow: 0 8px 24px rgba(217, 165, 91, 0.35);
+    font-weight: 700;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(46, 122, 63, 0.35);
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
   }
-
   .btn-yes:hover {
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 10px 30px rgba(217, 165, 91, 0.45);
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 14px 30px rgba(46, 122, 63, 0.45);
+    background: linear-gradient(135deg, #358d4a 0%, #236934 100%);
   }
-
   .btn-yes:active { transform: scale(0.97); }
 
   .btn-no {
-    background: transparent;
-    color: var(--blush-soft);
-    border: 1.5px solid rgba(246, 201, 207, 0.4);
+    background: rgba(255, 255, 255, 0.85);
+    color: #8b3a4a;
+    border: 1.5px solid rgba(220, 150, 165, 0.6);
     padding: 14px 28px;
     font-size: 0.95rem;
-    position: relative;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
   .btn-no.fixed-flee {
     position: fixed;
-    z-index: 5;
+    z-index: 99;
   }
 
   .no-caption {
     display: block;
-    margin-top: 10px;
-    font-size: 0.8rem;
-    color: var(--blush-soft);
-    opacity: 0.6;
-    min-height: 1.2em;
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #9c4d5c;
+    min-height: 1.4em;
+    font-weight: 500;
   }
 
-  /* ---- reveal view ---- */
-  .reveal-view {
-    display: none;
-  }
-
-  .reveal-view.show {
-    display: block;
-    animation: riseIn 0.6s cubic-bezier(.2,.9,.3,1);
-  }
-
-  @keyframes riseIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
+  /* Reveal Card */
   .reveal-card {
-    border: 1px solid rgba(217, 165, 91, 0.4);
-    background: rgba(255, 246, 239, 0.04);
-    border-radius: 20px;
-    padding: 38px 30px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 253, 244, 0.9) 100%);
+    border: 2px solid #bbf7d0;
+    border-radius: 22px;
+    padding: 32px 24px;
+    margin-top: 10px;
+    box-shadow: 0 12px 30px rgba(34, 197, 94, 0.12);
   }
 
-  .reveal-heart {
-    font-size: 2rem;
-    margin-bottom: 14px;
+  .reveal-heart-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    display: inline-block;
+    animation: heartBeat 1.4s ease-in-out infinite;
+  }
+  @keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.2); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.28); }
+    70% { transform: scale(1); }
   }
 
-  .line-text {
+  .love-quote-text {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: clamp(1.3rem, 4.5vw, 1.7rem);
-    line-height: 1.4;
-    color: var(--cream);
-    margin: 0 0 26px;
+    font-size: clamp(1.35rem, 4.2vw, 1.75rem);
+    line-height: 1.45;
+    color: #1a4329;
+    margin-bottom: 24px;
   }
 
-  .name-highlight {
-    color: var(--gold);
+  .name-glow {
+    color: #d81b60;
+    font-weight: 700;
     font-style: normal;
+  }
+
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1.5px solid #2e7a3f;
+    color: #2e7a3f;
+    padding: 10px 24px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background: #2e7a3f;
+    color: #ffffff;
+  }
+
+  /* ==========================================================================
+     TAB 2: LOVE FLOWER GARDEN (INTERACTIVE)
+     ========================================================================== */
+  .garden-zone {
+    background: linear-gradient(180deg, rgba(230, 248, 235, 0.8) 0%, rgba(212, 244, 221, 0.95) 100%);
+    border-radius: 20px;
+    padding: 24px 18px;
+    border: 1px solid #a7f3d0;
+  }
+
+  .garden-instructions {
+    font-size: 0.9rem;
+    color: #2d6a4f;
+    margin-bottom: 16px;
     font-weight: 600;
   }
 
-  .btn-again {
-    background: transparent;
-    border: 1px solid rgba(217, 165, 91, 0.5);
-    color: var(--gold);
-    padding: 11px 26px;
+  .garden-field {
+    min-height: 190px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    border: 2px dashed #6ee7b7;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .garden-placeholder {
+    color: #40916c;
     font-size: 0.9rem;
+    pointer-events: none;
+    text-align: center;
+    padding: 10px;
   }
 
-  .btn-again:hover {
-    background: rgba(217, 165, 91, 0.12);
+  .planted-flower {
+    position: absolute;
+    transform-origin: bottom center;
+    animation: growFlower 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    cursor: pointer;
+    user-select: none;
+  }
+  @keyframes growFlower {
+    0%   { transform: scale(0) translateY(20px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
   }
 
-  /* floating hearts burst */
+  .flower-whisper {
+    position: absolute;
+    background: #ffffff;
+    color: #1b4332;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    pointer-events: none;
+    animation: fadeUpWhisper 2.5s forwards;
+  }
+  @keyframes fadeUpWhisper {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(4px); }
+    15%  { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-18px); }
+  }
+
+  /* ==========================================================================
+     TAB 3: LOVE LETTERS & REASONS
+     ========================================================================== */
+  .love-reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+    text-align: left;
+  }
+
+  .reason-card {
+    background: #ffffff;
+    border: 1px solid #e2ece9;
+    border-radius: 16px;
+    padding: 18px 16px;
+    box-shadow: 0 4px 14px rgba(45, 106, 79, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .reason-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(45, 106, 79, 0.12);
+    border-color: #86efac;
+  }
+
+  .reason-icon {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  .reason-title {
+    font-weight: 700;
+    font-size: 0.98rem;
+    color: #1b4332;
+    margin-bottom: 4px;
+  }
+  .reason-desc {
+    font-size: 0.85rem;
+    color: #406852;
+    line-height: 1.45;
+  }
+
+  /* ==========================================================================
+     TAB 4: OUR JOURNEY & LOVE COUNTER
+     ========================================================================== */
+  .love-counter-box {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1.5px solid #a7f3d0;
+    border-radius: 20px;
+    padding: 24px 20px;
+    margin-bottom: 20px;
+  }
+  .counter-title {
+    font-size: 0.95rem;
+    color: #065f46;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .counter-display {
+    font-family: 'Caveat', cursive;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #047857;
+    margin-bottom: 6px;
+  }
+  .counter-sub {
+    font-size: 0.82rem;
+    color: #047857;
+    opacity: 0.85;
+  }
+
+  /* Ambient Sound & Nature Vibes Controller */
+  .sound-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(45, 106, 79, 0.15);
+  }
+  .sound-btn {
+    background: #ffffff;
+    border: 1px solid #86efac;
+    color: #1b4332;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .sound-btn:hover {
+    background: #ecfdf5;
+  }
+  .sound-btn.playing {
+    background: #10b981;
+    color: #ffffff;
+    border-color: #059669;
+  }
+
+  /* Heart Burst Generator */
   .burst-heart {
     position: fixed;
     bottom: -10px;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     pointer-events: none;
-    z-index: 4;
-    animation: floatUp 2.6s ease-in forwards;
+    z-index: 9999;
+    animation: floatHeartUp 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
 
-  @keyframes floatUp {
-    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(-90vh) translateX(var(--fx, 0px)) rotate(20deg); opacity: 0; }
+  @keyframes floatHeartUp {
+    0%   { transform: translateY(0) translateX(0) scale(0.6) rotate(0deg); opacity: 1; }
+    50%  { opacity: 1; transform: translateY(-45vh) translateX(var(--fx, 0px)) scale(1.2) rotate(15deg); }
+    100% { transform: translateY(-92vh) translateX(calc(var(--fx, 0px) * 1.5)) scale(0.9) rotate(-15deg); opacity: 0; }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 640px) {
+    .glass-card { padding: 28px 18px; border-radius: 22px; }
+    .cartoon-love-scene { right: 0; bottom: 8px; transform: scale(0.85); }
+    .cartoon-love-scene:hover { transform: scale(0.9); }
+    .tree-svg { width: 110px; height: 160px; }
+    .nav-pills { padding: 4px; }
+    .nav-pill-btn { padding: 6px 12px; font-size: 0.8rem; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .petal, .burst-heart { animation: none; display: none; }
-    * { transition: none !important; }
+    .floating-petal, .butterfly, .sun, .cloud, .planted-flower, .tree-svg {
+      animation: none !important;
+    }
   }
 </style>
 </head>
 <body>
 
-<div class="stage">
-
-  <div class="question-view" id="questionView">
-    <p class="eyebrow-name">a small question for Maltey MabMab</p>
-    <h1>Do you love me?</h1>
-    <p class="sub">Just one honest tap. I already know what I hope you'll pick.</p>
-
-    <div class="button-field" id="buttonField">
-      <button class="btn-yes" id="yesBtn">Yes, I love you 💛</button>
-      <button class="btn-no" id="noBtn">No</button>
-    </div>
-    <span class="no-caption" id="noCaption"></span>
+<!-- BACKGROUND NATURE SCENERY -->
+<div class="scenery-canvas-container">
+  <!-- Sun with Glow -->
+  <div class="sun">
+    <div class="sun-flare"></div>
   </div>
 
-  <div class="reveal-view" id="revealView">
-    <div class="reveal-card">
-      <div class="reveal-heart">💛</div>
-      <p class="line-text" id="lineText"></p>
-      <button class="btn-again" id="againBtn">Show me another</button>
-    </div>
+  <!-- Soft Moving Clouds -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+
+  <!-- Distant Majestic Blue & Teal Mountain Range -->
+  <svg class="scenery-mountains" viewBox="0 0 1440 450" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="mountGradFar" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#82a5c4" stop-opacity="0.85"/>
+        <stop offset="60%" stop-color="#a4c2db" stop-opacity="0.75"/>
+        <stop offset="100%" stop-color="#c9dfec" stop-opacity="0.9"/>
+      </linearGradient>
+      <linearGradient id="mountGradMid" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#5b937e" stop-opacity="0.9"/>
+        <stop offset="50%" stop-color="#76af98" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#9ed4be" stop-opacity="0.9"/>
+      </linearGradient>
+    </defs>
+    <!-- Far Mountain peaks -->
+    <path d="M0,260 L140,160 L320,270 L510,130 L690,260 L890,140 L1080,250 L1260,120 L1440,240 L1440,450 L0,450 Z" fill="url(#mountGradFar)"/>
+    <!-- Mid green peaks with sunlit slopes -->
+    <path d="M0,320 L180,210 L390,310 L590,190 L810,300 L1030,195 L1250,290 L1440,210 L1440,450 L0,450 Z" fill="url(#mountGradMid)"/>
+  </svg>
+
+  <!-- Rolling Lush Green Hills -->
+  <svg class="scenery-hills" viewBox="0 0 1440 320" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="hillBackGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#4ea863"/>
+        <stop offset="100%" stop-color="#3b8a4f"/>
+      </linearGradient>
+      <linearGradient id="hillFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#3aa354"/>
+        <stop offset="100%" stop-color="#24783b"/>
+      </linearGradient>
+    </defs>
+    <!-- Back rolling hill -->
+    <path d="M0,170 Q360,60 720,150 T1440,110 L1440,320 L0,320 Z" fill="url(#hillBackGrad)"/>
+    <!-- Front lush blooming hill -->
+    <path d="M0,220 Q420,110 880,210 T1440,170 L1440,320 L0,320 Z" fill="url(#hillFrontGrad)"/>
+  </svg>
+
+  <!-- Side Nature Cherry Blossom Tree -->
+  <div class="nature-side-decor">
+    <svg class="tree-svg" viewBox="0 0 160 220">
+      <!-- Trunk -->
+      <path d="M80,220 Q75,150 65,110 Q50,70 30,55 M65,110 Q85,80 115,65 M70,140 Q100,120 125,110" stroke="#5c3a21" stroke-width="8" stroke-linecap="round" fill="none"/>
+      <!-- Blossom foliage clusters -->
+      <circle cx="30" cy="50" r="32" fill="#ffb7c5" opacity="0.9"/>
+      <circle cx="50" cy="35" r="28" fill="#ffc2cd" opacity="0.85"/>
+      <circle cx="85" cy="40" r="36" fill="#ffaec0" opacity="0.9"/>
+      <circle cx="115" cy="60" r="30" fill="#ffc8d4" opacity="0.88"/>
+      <circle cx="130" cy="95" r="24" fill="#ffb3c1" opacity="0.85"/>
+      <circle cx="70" cy="70" r="28" fill="#ff9ebb" opacity="0.75"/>
+      <!-- Little flower accents -->
+      <circle cx="32" cy="48" r="4" fill="#fff"/>
+      <circle cx="88" cy="38" r="5" fill="#fff"/>
+      <circle cx="118" cy="58" r="4" fill="#fff"/>
+    </svg>
+  </div>
+</div>
+
+<!-- CARTOON OF LOVE: CHIBI COUPLE SITTING ON THE GREEN HILL -->
+<div class="cartoon-love-scene" id="cartoonCouple" title="Click to send love to Maltey MabMab!">
+  <div class="love-badge-dialog">
+    <span>Maltey & Me</span> 🌸 <span>Forever</span>
   </div>
 
+  <svg class="couple-svg" viewBox="0 0 200 170">
+    <defs>
+      <linearGradient id="picnicMat" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#ffccd5"/>
+        <stop offset="100%" stop-color="#f48fb1"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Floating animated love hearts above couple -->
+    <g class="hover-heart">
+      <path d="M100,24 C100,16 90,8 80,14 C70,20 74,32 100,48 C126,32 130,20 120,14 C110,8 100,16 100,24 Z" fill="#e91e63"/>
+      <path d="M72,32 C72,27 66,22 60,25 C54,29 56,36 72,46 C88,36 90,29 84,25 C78,22 72,27 72,32 Z" fill="#ff4081" opacity="0.85"/>
+      <path d="M128,32 C128,27 122,22 116,25 C110,29 112,36 128,46 C144,36 146,29 140,25 C134,22 128,27 128,32 Z" fill="#ff4081" opacity="0.85"/>
+    </g>
+
+    <!-- Cozy Picnic Blanket on Grass -->
+    <ellipse cx="100" cy="155" rx="85" ry="14" fill="url(#picnicMat)" stroke="#f06292" stroke-width="1.5"/>
+
+    <!-- BOY CHARACTER (Left) -->
+    <g id="boyChar">
+      <!-- Body / Cozy Sweater -->
+      <path d="M52,110 C52,95 80,95 80,110 L82,150 L50,150 Z" fill="#3b82f6"/>
+      <!-- Scarf/Collar -->
+      <path d="M56,108 Q66,114 76,108" stroke="#1d4ed8" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- Head -->
+      <circle cx="66" cy="80" r="22" fill="#ffe0bd"/>
+      <!-- Cute Hair -->
+      <path d="M44,80 C44,56 88,56 88,80 C84,65 72,60 66,60 C58,60 48,68 44,80 Z" fill="#4b2e1e"/>
+      <path d="M52,66 Q62,60 74,68" fill="#4b2e1e"/>
+      <!-- Happy Closed Smile Eyes (Loving Look) -->
+      <path d="M60,80 Q64,84 68,80" stroke="#333" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <!-- Cute Blush -->
+      <ellipse cx="56" cy="86" rx="4" ry="2.5" fill="#ff8da1" opacity="0.8"/>
+      <!-- Sweet Smile -->
+      <path d="M64,88 Q67,92 70,88" stroke="#333" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- Arm reaching to hold hands / flower -->
+      <path d="M76,115 Q90,122 96,128" stroke="#ffe0bd" stroke-width="6" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- GIRL CHARACTER / MALTEY (Right) -->
+    <g id="girlChar">
+      <!-- Body / Cute Dress -->
+      <path d="M120,110 C120,95 148,95 148,110 L152,150 L118,150 Z" fill="#ec4899"/>
+      <!-- Sweet Ribbon/Collar -->
+      <path d="M124,108 Q134,115 144,108" stroke="#be185d" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- Long Soft Hair Behind -->
+      <path d="M110,85 C108,125 158,125 156,85 Z" fill="#6d4c41"/>
+      <!-- Head -->
+      <circle cx="134" cy="80" r="22" fill="#ffe0bd"/>
+      <!-- Hair Bangs & Cute Side Pigtails / Flow -->
+      <path d="M112,78 C112,54 156,54 156,78 C150,62 140,58 134,58 C124,58 116,66 112,78 Z" fill="#54382c"/>
+      <!-- Flower Hair Accessory -->
+      <circle cx="150" cy="68" r="6" fill="#facc15"/>
+      <circle cx="150" cy="68" r="2.5" fill="#ea580c"/>
+      <!-- Happy Loving Blinking Eyes -->
+      <path d="M128,80 Q132,76 136,80" stroke="#333" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+      <!-- Cute Blushing Cheeks -->
+      <ellipse cx="140" cy="86" rx="4" ry="2.5" fill="#ff8da1" opacity="0.8"/>
+      <!-- Gentle Happy Smile -->
+      <path d="M130,88 Q134,93 138,88" stroke="#d81b60" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <!-- Arm holding hand & blooming love flower -->
+      <path d="M124,116 Q108,122 98,128" stroke="#ffe0bd" stroke-width="6" stroke-linecap="round" fill="none"/>
+    </g>
+
+    <!-- BLOOMING LOVE FLOWER HELD TOGETHER -->
+    <g transform="translate(97, 116)">
+      <!-- Stem & Leaves -->
+      <path d="M0,12 Q-2,5 0,0" stroke="#16a34a" stroke-width="3" fill="none"/>
+      <ellipse cx="-4" cy="6" rx="4" ry="2" fill="#22c55e" transform="rotate(-30 -4 6)"/>
+      <ellipse cx="4" cy="4" rx="4" ry="2" fill="#22c55e" transform="rotate(30 4 4)"/>
+      <!-- Red/Pink Rose Flower Head -->
+      <circle cx="0" cy="-4" r="7" fill="#ef4444"/>
+      <circle cx="-3" cy="-6" r="4" fill="#f43f5e"/>
+      <circle cx="3" cy="-6" r="4" fill="#fb7185"/>
+      <circle cx="0" cy="-4" r="3" fill="#ffe4e6"/>
+    </g>
+
+    <!-- Wildflowers blooming around the blanket -->
+    <g>
+      <circle cx="16" cy="158" r="5" fill="#fef08a"/>
+      <circle cx="16" cy="158" r="2" fill="#ca8a04"/>
+      <circle cx="30" cy="162" r="4" fill="#f472b6"/>
+      <circle cx="178" cy="156" r="5" fill="#a78bfa"/>
+      <circle cx="188" cy="160" r="4" fill="#fef08a"/>
+    </g>
+  </svg>
+</div>
+
+<!-- MAIN INTERACTIVE APP STAGE -->
+<div class="main-stage">
+
+  <!-- NAVIGATION TABS -->
+  <nav class="nav-pills" aria-label="Meadow Navigation">
+    <button class="nav-pill-btn active" data-tab="tab-question">💛 The Question</button>
+    <button class="nav-pill-btn" data-tab="tab-garden">🌸 Flower Garden</button>
+    <button class="nav-pill-btn" data-tab="tab-letters">💌 Love Notes</button>
+    <button class="nav-pill-btn" data-tab="tab-counter">⏳ Our Story</button>
+  </nav>
+
+  <!-- GLASS CONTAINER CARD -->
+  <div class="glass-card">
+
+    <!-- ==================== TAB 1: THE LOVE QUESTION ==================== -->
+    <div class="tab-pane active" id="tab-question">
+      <div class="card-top-decor">🌿 Fresh Nature & Endless Love</div>
+      <p style="font-family: 'Caveat', cursive; font-size: 1.4rem; color: #2e7a3f; margin-bottom: 4px;">a small question for Maltey MabMab</p>
+      <h1>Do you love me?</h1>
+      <p class="subtitle">Surrounded by rolling green mountains and sweet blossoms, I have only one question for you.</p>
+
+      <div id="questionView">
+        <div class="button-field" id="buttonField">
+          <button class="btn-yes" id="yesBtn">Yes, I love you 💛🌸</button>
+          <button class="btn-no" id="noBtn">No</button>
+        </div>
+        <span class="no-caption" id="noCaption"></span>
+      </div>
+
+      <div id="revealView" style="display: none;">
+        <div class="reveal-card">
+          <div class="reveal-heart-icon">🌸💛🌸</div>
+          <p class="love-quote-text" id="lineText"></p>
+          <button class="btn-secondary" id="againBtn">✨ Show me another sweet reason</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: LOVE FLOWER GARDEN ==================== -->
+    <div class="tab-pane" id="tab-garden">
+      <div class="card-top-decor">🌻 Plant Flowers for Maltey</div>
+      <h1>Our Blooming Garden</h1>
+      <p class="subtitle">Click or tap anywhere on the green field below to plant a blooming flower of love with a secret sweet message!</p>
+
+      <div class="garden-zone">
+        <div class="garden-instructions">🌱 Tap the meadow below to plant your flowers:</div>
+        <div class="garden-field" id="gardenField">
+          <div class="garden-placeholder" id="gardenPlaceholder">
+            ✨ Tap here to grow fresh sunflowers, roses, and daisies for Maltey MabMab! ✨
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; font-size: 0.85rem; color: #2d6a4f;">
+          <span id="flowerCount">Flowers in Meadow: 0 🌷</span>
+          <button class="btn-secondary" id="clearGardenBtn" style="padding: 6px 14px; font-size: 0.8rem;">Clear Meadow</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: LOVE NOTES & REASONS ==================== -->
+    <div class="tab-pane" id="tab-letters">
+      <div class="card-top-decor">💌 Little Secrets from the Heart</div>
+      <h1>Why I Adore Maltey</h1>
+      <p class="subtitle">Every tree on the mountain and every petal in the breeze holds a reason why you mean the whole world to me.</p>
+
+      <div class="love-reasons-grid">
+        <div class="reason-card">
+          <div class="reason-icon">🌸</div>
+          <div class="reason-title">Your Gentle Smile</div>
+          <div class="reason-desc">Brighter than the morning sun rising over the fresh green peaks. One look from you melts any worry away.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">🏔️</div>
+          <div class="reason-title">My Safe Haven</div>
+          <div class="reason-desc">Like a calm mountain retreat, being with you feels like breathing fresh, pure mountain air. You are my true home.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">💖</div>
+          <div class="reason-title">My Favorite Person</div>
+          <div class="reason-desc">From cozy laughs to quiet walks, every second spent with Maltey MabMab is my absolute favorite adventure.</div>
+        </div>
+        <div class="reason-card">
+          <div class="reason-icon">✨</div>
+          <div class="reason-title">Infinite Sweetness</div>
+          <div class="reason-desc">No matter how busy the world gets, my heart compiles sweet thoughts of you with zero errors, every single day.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: OUR STORY & COUNTER ==================== -->
+    <div class="tab-pane" id="tab-counter">
+      <div class="card-top-decor">⏳ Forever & Always</div>
+      <h1>Moments with Maltey</h1>
+      <p class="subtitle">Countless seconds of warmth, endless laughs, and a lifetime of fresh green horizons ahead of us.</p>
+
+      <div class="love-counter-box">
+        <div class="counter-title">🌿 Time Spent Falling More in Love with Maltey MabMab</div>
+        <div class="counter-display" id="loveTimer">Today, Tomorrow & Forever</div>
+        <div class="counter-sub">365 Days a Year • Every Single Breath • Infinite Love 💚</div>
+      </div>
+
+      <p style="font-size: 0.9rem; color: #2d6a4f; line-height: 1.6;">
+        "Like the mountains stand tall through the seasons and the flowers bloom with every spring, my feelings for you will only grow deeper with time."
+      </p>
+    </div>
+
+    <!-- SOUND & NATURE AMBIENCE TOGGLE -->
+    <div class="sound-controls">
+      <button class="sound-btn" id="ambientSoundBtn">
+        <span id="soundIcon">🎵</span> <span id="soundText">Play Nature Melody</span>
+      </button>
+      <button class="sound-btn" id="burstBtn">
+        <span>✨</span> <span>Shower Hearts</span>
+      </button>
+    </div>
+
+  </div>
 </div>
 
 <script>
+  // Configuration
+  const NAME = "Maltey MabMab";
+
+  // Elements
   const noBtn = document.getElementById('noBtn');
   const yesBtn = document.getElementById('yesBtn');
-  const buttonField = document.getElementById('buttonField');
   const questionView = document.getElementById('questionView');
   const revealView = document.getElementById('revealView');
   const lineText = document.getElementById('lineText');
   const againBtn = document.getElementById('againBtn');
   const noCaption = document.getElementById('noCaption');
+  const cartoonCouple = document.getElementById('cartoonCouple');
+  const ambientSoundBtn = document.getElementById('ambientSoundBtn');
+  const soundIcon = document.getElementById('soundIcon');
+  const soundText = document.getElementById('soundText');
+  const burstBtn = document.getElementById('burstBtn');
 
-  const NAME = "Maltey MabMab";
+  // Garden Elements
+  const gardenField = document.getElementById('gardenField');
+  const gardenPlaceholder = document.getElementById('gardenPlaceholder');
+  const flowerCountEl = document.getElementById('flowerCount');
+  const clearGardenBtn = document.getElementById('clearGardenBtn');
+  let plantedCount = 0;
 
+  // Tab Navigation
+  const navBtns = document.querySelectorAll('.nav-pill-btn');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      navBtns.forEach(b => b.classList.remove('active'));
+      tabPanes.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById(btn.getAttribute('data-tab'));
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Playful dodging button captions
   const captions = [
-    "wait, really?",
-    "come on, try the other one",
-    "it's just right there... almost",
-    "okay this button is shy",
-    "give up yet? 😌",
-    "the gold one is much friendlier"
+    "wait, really? 🌿",
+    "come on, try the green button 🌸",
+    "it's just right there... almost! ✨",
+    "okay, this button is shy today 🙈",
+    "give up yet? 😌💚",
+    "the green one has a fresh flower for you!"
   ];
 
+  // Romantic nature quotes
   const lines = [
-    `${NAME}, if you were a star, I'd stop naming constellations and just call the whole sky after you.`,
-    `They say home is a place — but for me, ${NAME}, it's just wherever you're smiling.`,
-    `${NAME}, I must be a snowflake, because I fell for you the moment I saw you.`,
-    `If loving ${NAME} were a subject at KiTH, I'd be studying it every single day, no breaks.`,
-    `${NAME}, my code has bugs, my day has plans, but my feelings for you always compile perfectly.`,
-    `Some people search their whole life for someone like you, ${NAME} — I just got lucky early.`
+    `${NAME}, if you were a star above the green mountains, I'd name the whole sky after you.`,
+    `They say nature is peace — but for me, ${NAME}, peace is wherever you are smiling.`,
+    `${NAME}, just like wildflowers bloom in the fresh spring breeze, my heart blossoms every time I see you.`,
+    `If loving ${NAME} were a mountain trail, I would happily walk it with you for a thousand lifetimes.`,
+    `${NAME}, my code has bugs, my day has plans, but my love for you always compiles with 100% perfection.`,
+    `Some people search the whole earth for someone rare, ${NAME} — I found my paradise in you.`,
+    `Every fresh sunrise and golden mountain view is beautiful, but nothing compares to your sweet eyes, ${NAME}.`
   ];
 
   let usedLines = [];
@@ -301,7 +1096,6 @@
   }
 
   function fleeNoButton() {
-    const fieldRect = buttonField.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
     if (!noBtn.classList.contains('fixed-flee')) {
@@ -309,7 +1103,7 @@
       noBtn.style.width = btnRect.width + 'px';
     }
 
-    const margin = 16;
+    const margin = 20;
     const maxX = window.innerWidth - btnRect.width - margin;
     const maxY = window.innerHeight - btnRect.height - margin;
     const newX = Math.max(margin, Math.random() * maxX);
@@ -319,7 +1113,7 @@
     noBtn.style.top = newY + 'px';
 
     dodgeCount++;
-    const scale = Math.max(0.55, 1 - dodgeCount * 0.06);
+    const scale = Math.max(0.55, 1 - dodgeCount * 0.05);
     noBtn.style.transform = `scale(${scale})`;
 
     noCaption.textContent = captions[Math.min(captionIndex, captions.length - 1)];
@@ -336,47 +1130,198 @@
     fleeNoButton();
   });
 
-  function spawnHeartBurst() {
-    const emojis = ['💛', '💕', '✨', '💗'];
-    for (let i = 0; i < 18; i++) {
+  // Floating Heart & Blossom Burst
+  function spawnHeartBurst(customEmojis) {
+    const emojis = customEmojis || ['💛', '🌸', '✨', '💖', '🌷', '🌿', '🌻', '💕'];
+    for (let i = 0; i < 22; i++) {
       const h = document.createElement('span');
       h.className = 'burst-heart';
       h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
       h.style.left = Math.random() * 100 + 'vw';
-      h.style.setProperty('--fx', (Math.random() * 160 - 80) + 'px');
-      h.style.animationDelay = (Math.random() * 0.8) + 's';
+      h.style.setProperty('--fx', (Math.random() * 180 - 90) + 'px');
+      h.style.animationDelay = (Math.random() * 0.7) + 's';
+      h.style.fontSize = (16 + Math.random() * 18) + 'px';
       document.body.appendChild(h);
-      setTimeout(() => h.remove(), 3600);
+      setTimeout(() => h.remove(), 3400);
     }
   }
 
   function showReveal() {
-    lineText.innerHTML = randomLine().replace(NAME, `<span class="name-highlight">${NAME}</span>`);
+    lineText.innerHTML = randomLine().replace(new RegExp(NAME, 'g'), `<span class="name-glow">${NAME}</span>`);
     questionView.style.display = 'none';
-    revealView.classList.add('show');
-    spawnHeartBurst();
+    revealView.style.display = 'block';
+    spawnHeartBurst(['💛', '🌸', '💐', '✨', '💖', '🌿']);
   }
 
   yesBtn.addEventListener('click', showReveal);
 
   againBtn.addEventListener('click', function () {
-    lineText.innerHTML = randomLine().replace(NAME, `<span class="name-highlight">${NAME}</span>`);
-    spawnHeartBurst();
+    lineText.innerHTML = randomLine().replace(new RegExp(NAME, 'g'), `<span class="name-glow">${NAME}</span>`);
+    spawnHeartBurst(['🌸', '💖', '🌻', '✨', '🌷']);
   });
 
-  // gentle background petals
-  const petalEmojis = ['🌸', '💮', '🌷'];
-  for (let i = 0; i < 10; i++) {
+  burstBtn.addEventListener('click', () => spawnHeartBurst());
+
+  // Click on cartoon couple
+  cartoonCouple.addEventListener('click', () => {
+    spawnHeartBurst(['💛', '🌸', '💕', '✨', '💐', '👩‍❤️‍👨']);
+  });
+
+  // ==========================================================================
+  // INTERACTIVE FLOWER OF LOVE GARDEN
+  // ==========================================================================
+  const flowerEmojis = ['🌸', '🌷', '🌻', '🌹', '🌼', '🌺', '💐', '💮'];
+  const flowerWhispers = [
+    `For ${NAME} 🌸`,
+    'My Sunshine ☀️',
+    'Forever Love 💚',
+    'So Sweet 🍯',
+    'Beautiful Maltey ✨',
+    'My Paradise 🌿',
+    'Endless Smiles 💖',
+    'Holding Hands 🤝',
+    'Always You 🌷'
+  ];
+
+  gardenField.addEventListener('click', function(e) {
+    if (gardenPlaceholder) gardenPlaceholder.style.display = 'none';
+
+    const rect = gardenField.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const flower = document.createElement('div');
+    flower.className = 'planted-flower';
+    const chosenEmoji = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+    flower.textContent = chosenEmoji;
+    flower.style.left = (x - 16) + 'px';
+    flower.style.top = (y - 24) + 'px';
+    flower.style.fontSize = (24 + Math.random() * 16) + 'px';
+
+    const whisper = document.createElement('div');
+    whisper.className = 'flower-whisper';
+    whisper.textContent = flowerWhispers[Math.floor(Math.random() * flowerWhispers.length)];
+    flower.appendChild(whisper);
+
+    gardenField.appendChild(flower);
+    plantedCount++;
+    flowerCountEl.textContent = `Flowers in Meadow: ${plantedCount} 🌷`;
+
+    // Mini heart spark
+    spawnHeartBurst(['🌸', '✨', '💚']);
+  });
+
+  clearGardenBtn.addEventListener('click', () => {
+    const flowers = gardenField.querySelectorAll('.planted-flower');
+    flowers.forEach(f => f.remove());
+    if (gardenPlaceholder) gardenPlaceholder.style.display = 'block';
+    plantedCount = 0;
+    flowerCountEl.textContent = `Flowers in Meadow: 0 🌷`;
+  });
+
+  // ==========================================================================
+  // BACKGROUND GENTLE PETALS & BUTTERFLIES
+  // ==========================================================================
+  const petalList = ['🌸', '💮', '🌷', '🍃', '✨', '🌼'];
+  for (let i = 0; i < 14; i++) {
     const p = document.createElement('div');
-    p.className = 'petal';
-    p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    p.className = 'floating-petal';
+    p.textContent = petalList[Math.floor(Math.random() * petalList.length)];
     p.style.left = Math.random() * 100 + 'vw';
-    p.style.setProperty('--drift-x', (Math.random() * 60 - 30) + 'px');
-    p.style.animationDuration = (10 + Math.random() * 10) + 's';
-    p.style.animationDelay = (Math.random() * 10) + 's';
-    p.style.fontSize = (14 + Math.random() * 14) + 'px';
+    p.style.setProperty('--drift-x', (Math.random() * 100 - 50) + 'px');
+    p.style.animationDuration = (12 + Math.random() * 14) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    p.style.fontSize = (14 + Math.random() * 12) + 'px';
     document.body.appendChild(p);
   }
+
+  // Gentle fluttering butterflies
+  for (let i = 0; i < 2; i++) {
+    const b = document.createElement('div');
+    b.className = 'butterfly';
+    b.textContent = '🦋';
+    b.style.animationDelay = (i * 10) + 's';
+    p = document.body.appendChild(b);
+  }
+
+  // ==========================================================================
+  // WEB AUDIO API SYNTHESIZED NATURE MELODY (No external audio needed)
+  // ==========================================================================
+  let audioCtx = null;
+  let isPlaying = false;
+  let melodyTimer = null;
+
+  const peacefulChords = [
+    [261.63, 329.63, 392.00], // C major
+    [293.66, 349.23, 440.00], // D minor
+    [329.63, 392.00, 493.88], // E minor
+    [349.23, 440.00, 523.25], // F major
+    [392.00, 493.88, 587.33]  // G major
+  ];
+
+  function playSweetTone(freq, duration = 1.6, delay = 0) {
+    if (!audioCtx) return;
+    try {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime + delay);
+
+      gain.gain.setValueAtTime(0, audioCtx.currentTime + delay);
+      gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + delay + 0.15);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + delay + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(audioCtx.currentTime + delay);
+      osc.stop(audioCtx.currentTime + delay + duration);
+    } catch(e) {}
+  }
+
+  function startMelodyLoop() {
+    if (melodyTimer) clearInterval(melodyTimer);
+    let chordIdx = 0;
+
+    function playNextChord() {
+      if (!isPlaying) return;
+      const chord = peacefulChords[chordIdx % peacefulChords.length];
+      chord.forEach((note, i) => {
+        playSweetTone(note, 2.2, i * 0.22);
+      });
+      // Add a higher bell chime
+      playSweetTone(chord[0] * 2, 1.8, 0.6);
+      chordIdx++;
+    }
+
+    playNextChord();
+    melodyTimer = setInterval(playNextChord, 2800);
+  }
+
+  ambientSoundBtn.addEventListener('click', () => {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    if (!isPlaying) {
+      isPlaying = true;
+      ambientSoundBtn.classList.add('playing');
+      soundIcon.textContent = '🔊';
+      soundText.textContent = 'Melody Playing 🌿';
+      startMelodyLoop();
+      spawnHeartBurst(['🎵', '🌸', '✨']);
+    } else {
+      isPlaying = false;
+      ambientSoundBtn.classList.remove('playing');
+      soundIcon.textContent = '🎵';
+      soundText.textContent = 'Play Nature Melody';
+      if (melodyTimer) clearInterval(melodyTimer);
+    }
+  });
 </script>
 </body>
 </html>
